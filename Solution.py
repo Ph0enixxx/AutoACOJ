@@ -44,7 +44,7 @@ class Solution(BaseSolution):
 	def submit(self,code):
 		payload = {}
 		payload['problemid'] = str(self.sid)
-		payload['language']  = str(1)
+		payload['language']  = str(2)
 		payload['usercode']  = str(code)
 		res = self.session.post("http://acm.hdu.edu.cn/submit.php?action=submit",data=payload)
 	# def check(self):

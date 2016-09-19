@@ -37,18 +37,20 @@ class AutoAC(object):
 		text = re.sub(r"&gt;",">",text)
 		text = re.sub(r"&quot;","\"",text)
 		text = re.sub(r"&amp;","&",text)
+		text = re.sub(r"&nbsp;"," ",text)
 		return (text+"\n}")
 	pass
 
 def main():
 	#text = req.get("")
-	s = Solution(1003,"201458503124","asdf1234")
-	#多线程！
-	#print(s.check())
-	a = AutoAC(1003)
-	code = a.getCode()
-	# code = a._getCode("123")
-	print(code)
-	s.submit(code)
+	for i in range(1003,1010):
+		s = Solution(i,"201458503124","asdf1234")
+		#多线程！
+		#print(s.check())
+		a = AutoAC(i)
+		code = a.getCode()
+		# code = a._getCode("123")
+		print(code)
+		s.submit(code)
 if __name__ == '__main__':
 	main()
