@@ -1,3 +1,4 @@
+import fun
 from Solution import Solution
 import requests 
 import re
@@ -13,8 +14,12 @@ class AutoAC(object):
 		res = requests.get("http://cn.bing.com/search?q=" + (self.keyword))
 		#print(res.text)
 		text = re.findall(r"href=\"(http://" + self.url + ".*?)\"",res.text)
-		print(text[0])
-		return text[0]
+		try:
+			fun.msg("Result URL:" + text[0],2)
+			return text[0]
+		except:
+			fun.msg("Fetch result failed..",1)
+			return None
 	def getCode(self,url=""):
 		#功能 
 		#优化！
@@ -22,12 +27,17 @@ class AutoAC(object):
 		if url == "":
 			url = self._search()
 		user_agent = {'User-agent': 'Mozilla/5.0'}
-		t = requests.get(url,headers=user_agent)
+		try:
+			t = requests.get(url,headers=user_agent)
+			code = re.findall(r"#include[.\s\S]*return 0;",t.text)
+			code = self._del_tags("".join(code))
+			#print(code)
+			return code
+		except:
+			fun.msg("Fetch Code failed..",1)
+			return ""
 		#1print(t)
-		code = re.findall(r"#include[.\s\S]*return 0;",t.text)
-		code = self._del_tags("".join(code))
-		print(code)
-		return code
+
 	def _del_tags(self,text):
 		#功能 ok
 		#优化！
@@ -41,16 +51,3 @@ class AutoAC(object):
 		return (text+"\n}")
 	pass
 
-def main():
-	#text = req.get("")
-	for i in range(1003,1010):
-		s = Solution(i,"201458503124","asdf1234")
-		#多线程！
-		#print(s.check())
-		a = AutoAC(i)
-		code = a.getCode()
-		# code = a._getCode("123")
-		print(code)
-		s.submit(code)
-if __name__ == '__main__':
-	main()
