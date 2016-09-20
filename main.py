@@ -11,7 +11,7 @@ def main():
 		a = AutoAC(i)
 		code = a.getCode()
 		# code = a._getCode("123")
-		print(code)
+		#print(code)
 		s.submit(code)
 if __name__ == '__main__':
 	main()

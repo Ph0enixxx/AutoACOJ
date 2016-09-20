@@ -4,6 +4,7 @@ import re
 import sys
 import io
 from bs4 import BeautifulSoup
+import fun
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer,encoding='utf-8')
 
 #登陆 保持session
@@ -31,13 +32,13 @@ class BaseSolution(object):
 		try:
 			res = self.session.post(self._loginUrl,data = self._loginData)
 		except:
-			print("[ERR]Login failed..")
+			fun.msg("Login failed..",1)
 			return False
 		if username in res.text:
-			print("[OK]Login success..")
+			fun.msg("Login success..",0)
 			return True
 		else:
-			print("[ERR]Login failed..")
+			fun.msg("Login failed..",1)
 			return False
 	def submit(self,sid,code):
 		pass
@@ -65,12 +66,12 @@ class Solution(BaseSolution):
 		payload['problemid'] = str(self.sid)
 		payload['language']  = str(2)
 		payload['usercode']  = str(code)
-		print("[INFO]Submit ID:" + payload['problemid'])
+		fun.msg("Submit ID:" + payload['problemid'],2)
 		try:
 			res = self.session.post("http://acm.hdu.edu.cn/submit.php?action=submit",data=payload)
-			print("[OK]Submit success..")
+			fun.msg("Submit success..",0)
 		except:
-			print("[ERR]Submit failed..")
+			fun.msg("Submit failed..",1)
 	# def check(self):
 	# 	res  = requests.get("http://acm.hdu.edu.cn/status.php?first=&pid=&user=" + self.sid)
 	# 	soup = BeautifulSoup(res.text,"html.parser")
